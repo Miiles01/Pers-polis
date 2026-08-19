@@ -112,7 +112,22 @@ if (infoCards.length) {
   infoObserver.observe(document.querySelector('.infos-grid'));
 }
 
-// The three scroll-pin effects below measure real element/viewport sizes
+// Brand line — each word lights up from dim to full color as you scroll past it
+const brandText = document.querySelector('.brand-text');
+if (brandText) {
+  gsap.to(splitWords(brandText).words, {
+    color: '#f4ede0',
+    stagger: 0.1,
+    scrollTrigger: {
+      trigger: brandText,
+      start: 'top center',
+      end: 'bottom center',
+      scrub: true
+    }
+  });
+}
+
+// The two scroll-pin effects below measure real element/viewport sizes
 // (clientWidth, innerWidth, offsetWidth) to compute their scroll distances.
 // window.innerWidth can briefly read 0 right at "load" in some embedded/preview
 // browser hosts, so wait a tick past load (rAF x2) before measuring anything.
@@ -131,53 +146,74 @@ whenReady(initPinEffects);
 
 function initPinEffects() {
 
-// Brand line — horizontal scroll-pin, letter-by-letter reveal. Desktop/tablet only.
+// These two pins are created in the same order they appear in the DOM
+// (dishes -> testimonials). GSAP measures each new trigger's "natural"
+// position against the current layout, which includes the pin-spacers of
+// any pins created before it — creating them out of DOM order would measure
+// a later section's position before an earlier pin-spacer has grown to its
+// full scrubbed height, undercounting its start and causing visual overlap.
+
+// "Nos plats populaires" — GSAP scroll-pin horizontal card effect, desktop/tablet only.
+// Cards travel across the viewport as the section is pinned and scrolled; each card gets
+// a trailing "lag" kick (proportional to scroll speed) as it enters the frame.
+// On mobile this whole block is skipped — plain native touch-scroll carousel, no motion, no arrows.
 if (window.matchMedia('(min-width: 721px)').matches) {
-  const brandLineContainer = document.querySelector('.brand-line-container');
-  const brandLines = document.getElementById('brandLines');
+  const dishesPin = document.getElementById('dishesPin');
+  const dishCardsTrack = document.getElementById('dishCards');
+  const dishCardEls = dishCardsTrack ? dishCardsTrack.querySelectorAll('.dish-card') : [];
 
-  if (brandLineContainer && brandLines) {
-    brandLines.querySelectorAll('.line').forEach(line => wrapLettersInSpan(line));
-    const letters = brandLines.querySelectorAll('.letter');
-    const brandDistance = brandLines.clientWidth - window.innerWidth;
+  if (dishesPin && dishCardsTrack && dishCardEls.length) {
+    const distance = dishCardsTrack.clientWidth - window.innerWidth;
 
-    const brandScrollTween = gsap.to(brandLines, {
-      x: -brandDistance,
+    const scrollTween = gsap.to(dishCardsTrack, {
+      x: -distance,
       ease: 'none',
       scrollTrigger: {
-        trigger: brandLineContainer,
+        trigger: dishesPin,
         pin: true,
         scrub: true,
         start: 'top top',
-        end: '+=' + brandDistance
+        end: '+=' + distance
       }
     });
 
-    letters.forEach(letter => {
-      gsap.fromTo(letter.querySelector('span'), {
-        autoAlpha: 0
+    let transformBetweenTwoTicks = 0;
+    let oldTransform = 0;
+    function dishTick() {
+      const currentTransform = gsap.getProperty(dishCardsTrack, 'x');
+      transformBetweenTwoTicks = currentTransform - oldTransform;
+      oldTransform = currentTransform;
+    }
+
+    function transformDishCard(el) {
+      gsap.fromTo(el, {
+        xPercent: -transformBetweenTwoTicks * 3
       }, {
-        autoAlpha: 1,
-        x: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: letter,
-          containerAnimation: brandScrollTween,
-          start: 'left 90%',
-          end: '+=' + letter.offsetWidth,
-          scrub: true
-        }
+        xPercent: 0,
+        ease: 'power3.out',
+        duration: 0.7
+      });
+    }
+
+    dishCardEls.forEach(card => {
+      ScrollTrigger.create({
+        trigger: card,
+        containerAnimation: scrollTween,
+        start: 'left 100%',
+        end: 'right 0%',
+        onEnter: () => transformDishCard(card.children[0]),
+        onEnterBack: () => transformDishCard(card.children[0])
       });
     });
-  }
-}
 
-function wrapLettersInSpan(element) {
-  const text = element.textContent;
-  element.innerHTML = text
-    .split('')
-    .map(char => char === ' ' ? '<span> </span>' : '<span class="letter"><span>' + char + '</span></span>')
-    .join('');
+    ScrollTrigger.create({
+      trigger: document.getElementById('plats'),
+      onEnter: () => gsap.ticker.add(dishTick),
+      onLeave: () => gsap.ticker.remove(dishTick),
+      onEnterBack: () => gsap.ticker.add(dishTick),
+      onLeaveBack: () => gsap.ticker.remove(dishTick)
+    });
+  }
 }
 
 // "Ce que disent nos clients" — 3D dual-deck scroll-pin effect, desktop/tablet only.
@@ -247,6 +283,10 @@ if (window.matchMedia('(min-width: 721px)').matches) {
   }
 }
 
+ScrollTrigger.refresh();
+
+} // end initPinEffects
+
 // Gallery items appear one after another as the grid scrolls into view
 const galleryItems = document.querySelectorAll('.gallery-item');
 if (galleryItems.length) {
@@ -267,71 +307,6 @@ if (galleryItems.length) {
 
   galleryObserver.observe(document.querySelector('.gallery-grid'));
 }
-
-// "Nos plats populaires" — GSAP scroll-pin horizontal card effect, desktop/tablet only.
-// Cards travel across the viewport as the section is pinned and scrolled; each card gets
-// a trailing "lag" kick (proportional to scroll speed) as it enters the frame.
-// On mobile this whole block is skipped — plain native touch-scroll carousel, no motion, no arrows.
-if (window.matchMedia('(min-width: 721px)').matches) {
-  const dishesPin = document.getElementById('dishesPin');
-  const dishCardsTrack = document.getElementById('dishCards');
-  const dishCardEls = dishCardsTrack ? dishCardsTrack.querySelectorAll('.dish-card') : [];
-
-  if (dishesPin && dishCardsTrack && dishCardEls.length) {
-    const distance = dishCardsTrack.clientWidth - window.innerWidth;
-
-    const scrollTween = gsap.to(dishCardsTrack, {
-      x: -distance,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: dishesPin,
-        pin: true,
-        scrub: true,
-        start: 'top top',
-        end: '+=' + distance
-      }
-    });
-
-    let transformBetweenTwoTicks = 0;
-    let oldTransform = 0;
-    function dishTick() {
-      const currentTransform = gsap.getProperty(dishCardsTrack, 'x');
-      transformBetweenTwoTicks = currentTransform - oldTransform;
-      oldTransform = currentTransform;
-    }
-
-    function transformDishCard(el) {
-      gsap.fromTo(el, {
-        xPercent: -transformBetweenTwoTicks * 3
-      }, {
-        xPercent: 0,
-        ease: 'power3.out',
-        duration: 0.7
-      });
-    }
-
-    dishCardEls.forEach(card => {
-      ScrollTrigger.create({
-        trigger: card,
-        containerAnimation: scrollTween,
-        start: 'left 100%',
-        end: 'right 0%',
-        onEnter: () => transformDishCard(card.children[0]),
-        onEnterBack: () => transformDishCard(card.children[0])
-      });
-    });
-
-    ScrollTrigger.create({
-      trigger: document.getElementById('plats'),
-      onEnter: () => gsap.ticker.add(dishTick),
-      onLeave: () => gsap.ticker.remove(dishTick),
-      onEnterBack: () => gsap.ticker.add(dishTick),
-      onLeaveBack: () => gsap.ticker.remove(dishTick)
-    });
-  }
-}
-
-} // end initPinEffects
 
 // Gallery lightbox
 const lightbox = document.getElementById('lightbox');
