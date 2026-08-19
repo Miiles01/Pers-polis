@@ -70,8 +70,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(12,11,10,.9);
-  backdrop-filter: blur(8px);
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 .header-inner {
@@ -166,105 +165,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .section-head h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
 .section-sub { color: var(--muted); font-size: .95rem; }
 
-.menus { padding: 10rem 0; max-width: var(--max); margin: 0 auto; }
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-  padding: 0 1.5rem;
-  align-items: start;
-}
-
-.menu-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2.6rem 1.8rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-.menu-card-link {
-  display: block;
-  text-align: center;
-  font-size: .78rem;
-  color: var(--muted);
-  margin-top: .9rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.menu-card-link:hover { color: var(--gold-soft); }
-.menu-card-featured {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 1px var(--gold), 0 18px 40px -20px rgba(201,163,94,.4);
-  transform: translateY(-8px);
-}
-.menu-badge {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gold);
-  color: #1a1408;
-  font-size: .7rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: .35em 1em;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-.menu-card-head { text-align: center; margin-bottom: 1.8rem; }
-.menu-card-head h3 { font-size: 1.5rem; margin-bottom: .2em; }
-.menu-tag { font-style: italic; color: var(--gold-soft); font-size: .88rem; margin-bottom: .8em; }
-.menu-price { font-family: var(--serif); font-size: 2.4rem; color: var(--cream); font-weight: 700; }
-.menu-price span { font-size: 1.3rem; vertical-align: super; }
-.menu-price small { font-family: var(--body); font-size: .8rem; color: var(--muted); font-weight: 400; }
-
-.menu-section { margin-bottom: 1.4rem; }
-.menu-section h4 {
-  font-size: .78rem;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--gold);
-  padding-bottom: .5em;
-  border-bottom: 1px solid var(--red);
-  margin-bottom: .9em;
-}
-.menu-section h4 span { color: var(--muted); text-transform: none; letter-spacing: 0; font-style: italic; }
-.menu-section li {
-  font-size: .88rem;
-  color: var(--cream-dim);
-  padding-left: 1.1em;
-  position: relative;
-  margin-bottom: .7em;
-}
-.menu-section li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: .55em;
-  width: 5px;
-  height: 5px;
-  background: var(--gold);
-  transform: rotate(45deg);
-}
-.menu-section li strong { color: var(--cream); font-weight: 700; }
-
-.menu-accomp {
-  font-size: .82rem;
-  color: var(--muted);
-  font-style: italic;
-  border-top: 1px dashed var(--border);
-  border-bottom: 1px dashed var(--border);
-  padding: 1em 0;
-  margin-bottom: 1.4rem;
-}
-.menu-accomp strong { color: var(--gold-soft); font-style: normal; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .4em; }
-
-.menu-cta { margin-top: auto; text-align: center; }
-
 /* Dish cards — GSAP scroll-pin horizontal effect (desktop/tablet) */
 .dishes { position: relative; overflow: hidden; padding: 6rem 0; }
 .dishes .section-head { padding-top: 2rem; }
@@ -325,82 +225,54 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .carousel-btn:hover { border-color: var(--gold); color: var(--cream); }
 
-/* Book menu — CSS 3D flipbook (desktop/tablet) + simple pager (mobile) */
-.book-menu { padding: 8rem 1.5rem; max-width: var(--max); margin: 0 auto; }
+/* Testimonials — 3D dual-deck scroll-pin effect (desktop/tablet) */
+.testimonials { padding: 8rem 0; max-width: var(--max); margin: 0 auto; overflow: hidden; }
 
-.flipbook-wrap {
+.testimonial-pin-height { height: 400vh; position: relative; }
+.testimonial-stage {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  perspective: 150vw;
+}
+.testi-medias {
+  grid-area: 1 / 1;
+  width: 320px;
+  max-width: 60vw;
+  aspect-ratio: 0.82;
+  border-radius: 12px;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.testi-media {
+  position: absolute;
+  inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-}
-.flipbook {
-  position: relative;
-  width: min(380px, 80vw);
-  aspect-ratio: 1583 / 2048;
-  perspective: 2400px;
-  filter: drop-shadow(0 25px 50px rgba(0,0,0,.5));
-}
-.flip-check { display: none; }
-.flip-page {
-  position: absolute;
-  inset: 0;
-  display: block;
-  cursor: pointer;
-  transform-origin: 0% 50%;
-  transform: rotateY(0deg);
-  transform-style: preserve-3d;
-  transition: transform 1s cubic-bezier(.645,.045,.355,1), z-index 0s .5s;
-  z-index: calc(var(--total) - var(--i));
-  background: var(--card);
-}
-/* overflow/radius live on the front/back faces, not on .flip-page itself —
-   combining them with the parent's 3D transform breaks backface-visibility in Chromium */
-.flip-front, .flip-back {
-  position: absolute;
-  inset: 0;
+  border-radius: 12px;
+  overflow: hidden;
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden;
-  border-radius: 0 4px 4px 0;
 }
-.flip-front { transform: rotateY(0deg) translateZ(1px); }
-.flip-back { transform: rotateY(180deg) translateZ(1px); background: #0a0908; }
-.flip-front img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.cover-patch {
-  position: absolute;
-  left: 28%;
-  right: 28%;
-  top: 82.5%;
-  bottom: 7%;
-  background: #0c0a08;
-}
-.flip-check:checked + .flip-page {
-  transform: rotateY(-170deg);
-  z-index: var(--i);
-  transition: transform 1s cubic-bezier(.645,.045,.355,1), z-index 0s 0s;
-}
-.menu-pager { display: none; flex-direction: column; align-items: center; gap: 1.25rem; }
-.pager-frame {
-  width: min(320px, 78vw);
-  aspect-ratio: 1583 / 2048;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 20px 45px rgba(0,0,0,.45);
-  border: 1px solid var(--border);
-}
-.pager-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.pager-controls { display: flex; align-items: center; gap: 1.5rem; }
-.pager-count { font-family: var(--serif); color: var(--gold-soft); font-size: .9rem; letter-spacing: .05em; min-width: 3.5em; text-align: center; }
+.testi-media:not(:first-child) { visibility: hidden; }
+.testi-media:nth-child(even) { transform: rotateY(180deg); }
 
-/* Testimonials */
-.testimonials { padding: 8rem 1.5rem; max-width: var(--max); margin: 0 auto; }
-.testimonial-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.testi-medias-a .testi-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.testi-medias-b .testi-media {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2.2rem;
+  text-align: center;
+}
+.testi-stars { color: var(--gold); letter-spacing: .1em; font-size: .85rem; margin-bottom: 1em; }
+.testi-medias-b .testi-media p { font-style: italic; color: var(--cream-dim); font-size: .92rem; line-height: 1.7; margin: 0 0 1.2em; }
+.testi-name { font-family: var(--serif); color: var(--gold-soft); font-size: .88rem; }
+
+.testimonial-mobile { display: none; }
+
+/* Legacy simple card look, reused by the mobile fallback below */
 .testimonial-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -408,7 +280,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 1.8rem 1.6rem;
 }
 .testimonial-stars { color: var(--gold); letter-spacing: .1em; font-size: .85rem; margin: 0 0 .8em; }
-.testimonial-quote { font-style: italic; font-size: .88rem; color: var(--cream-dim); margin: 0 0 1em; line-height: 1.7; }
+.testimonial-quote { font-style: italic; font-size: .88rem; color: var(--cream-dim); margin: 0 0 1.4em; line-height: 1.7; }
+.testimonial-person { display: flex; align-items: center; gap: .7rem; }
+.testimonial-person img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .testimonial-author { font-family: var(--serif); font-size: .85rem; color: var(--gold-soft); margin: 0; }
 
 /* Gallery */
@@ -468,6 +342,31 @@ ul { margin: 0; padding: 0; list-style: none; }
   cursor: pointer;
   line-height: 1;
 }
+
+/* Brand line — horizontal scroll-pin letter reveal (desktop/tablet only) */
+.brand-line { overflow: hidden; position: relative; }
+.brand-line-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+.brand-line-lines {
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  padding: 0 100vw;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 8vw;
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.brand-line-lines .line { margin: 0; }
+.brand-line .letter { display: inline-block; clip-path: polygon(0 -10%, 0 110%, 100% 110%, 100% -10%); }
+.brand-line .letter span { display: inline-block; transform: translate(-100%, 0); }
 
 /* Info band */
 .infos { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 7.5rem 1.5rem; }
@@ -550,13 +449,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* Responsive */
 @media (max-width: 980px) {
-  .menu-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-  .menu-card-featured { transform: none; }
   .infos-grid { grid-template-columns: 1fr; gap: 3rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .brand-icon-xl { width: 100px; height: 100px; }
-  .testimonial-grid { grid-template-columns: 1fr 1fr; }
   .brand-word-xl { font-size: 2.1rem; }
+  .testi-medias { width: 260px; }
 }
 
 @media (max-width: 720px) {
@@ -597,10 +494,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   .dish-cards::-webkit-scrollbar { display: none; }
   .dish-card { width: 78vw; scroll-snap-align: start; transform: none !important; }
 
-  .flipbook-wrap { display: none; }
-  .menu-pager { display: flex; }
-  .menu-pager .carousel-btn { display: flex; }
-  .testimonial-grid { grid-template-columns: 1fr; }
+  .testimonials { padding: 5rem 1.25rem; }
+  .testimonial-pin-height { display: none; }
+  .testimonial-mobile { display: flex; flex-direction: column; gap: 1rem; max-width: 480px; margin: 0 auto; }
+
+  .brand-line { display: none; }
   .gallery-grid {
     display: flex;
     columns: unset;

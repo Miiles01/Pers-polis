@@ -112,65 +112,139 @@ if (infoCards.length) {
   infoObserver.observe(document.querySelector('.infos-grid'));
 }
 
-// Book menu — desktop/tablet CSS 3D flipbook controls
-const flipChecks = Array.from(document.querySelectorAll('.flip-check'));
-const flipPrev = document.getElementById('flipPrev');
-const flipNext = document.getElementById('flipNext');
-
-if (flipChecks.length && flipPrev && flipNext) {
-  flipNext.addEventListener('click', () => {
-    const next = flipChecks.find(cb => !cb.checked);
-    if (next) next.checked = true;
-  });
-  flipPrev.addEventListener('click', () => {
-    const last = [...flipChecks].reverse().find(cb => cb.checked);
-    if (last) last.checked = false;
-  });
+// The three scroll-pin effects below measure real element/viewport sizes
+// (clientWidth, innerWidth, offsetWidth) to compute their scroll distances.
+// window.innerWidth can briefly read 0 right at "load" in some embedded/preview
+// browser hosts, so wait a tick past load (rAF x2) before measuring anything.
+function whenReady(fn) {
+  function settle() {
+    requestAnimationFrame(() => requestAnimationFrame(fn));
+  }
+  if (document.readyState === 'complete') {
+    settle();
+  } else {
+    window.addEventListener('load', settle);
+  }
 }
 
-// Book menu — mobile pager
-const bookPages = Array.from({ length: 8 }, (_, i) => `assets/book-menu/page-${i + 1}.jpg`);
-const pagerImg = document.getElementById('pagerImg');
-const pagerCount = document.getElementById('pagerCount');
-const pagerPrev = document.getElementById('pagerPrev');
-const pagerNext = document.getElementById('pagerNext');
-let pagerIndex = 0;
+whenReady(initPinEffects);
 
-function renderPager() {
-  if (!pagerImg) return;
-  pagerImg.src = bookPages[pagerIndex];
-  pagerImg.alt = `Menu Persépolis, page ${pagerIndex + 1}`;
-  pagerCount.textContent = `${pagerIndex + 1} / ${bookPages.length}`;
-}
+function initPinEffects() {
 
-pagerPrev?.addEventListener('click', () => {
-  pagerIndex = (pagerIndex - 1 + bookPages.length) % bookPages.length;
-  renderPager();
-});
-pagerNext?.addEventListener('click', () => {
-  pagerIndex = (pagerIndex + 1) % bookPages.length;
-  renderPager();
-});
+// Brand line — horizontal scroll-pin, letter-by-letter reveal. Desktop/tablet only.
+if (window.matchMedia('(min-width: 721px)').matches) {
+  const brandLineContainer = document.querySelector('.brand-line-container');
+  const brandLines = document.getElementById('brandLines');
 
-// Testimonial quotes — line-by-line stagger as the section scrolls into view
-const testimonialQuotes = document.querySelectorAll('.testimonial-quote');
-if (testimonialQuotes.length) {
-  gsap.set(testimonialQuotes, { opacity: 0, y: 30 });
+  if (brandLineContainer && brandLines) {
+    brandLines.querySelectorAll('.line').forEach(line => wrapLettersInSpan(line));
+    const letters = brandLines.querySelectorAll('.letter');
+    const brandDistance = brandLines.clientWidth - window.innerWidth;
 
-  const testimonialObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        gsap.to(testimonialQuotes, {
-          y: 0, opacity: 1,
-          stagger: 0.2, duration: 0.8,
-          ease: 'power2.out'
-        });
-        testimonialObserver.unobserve(entry.target);
+    const brandScrollTween = gsap.to(brandLines, {
+      x: -brandDistance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: brandLineContainer,
+        pin: true,
+        scrub: true,
+        start: 'top top',
+        end: '+=' + brandDistance
       }
     });
-  }, { threshold: 0.2 });
 
-  testimonialObserver.observe(document.querySelector('.testimonial-grid'));
+    letters.forEach(letter => {
+      gsap.fromTo(letter.querySelector('span'), {
+        autoAlpha: 0
+      }, {
+        autoAlpha: 1,
+        x: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: letter,
+          containerAnimation: brandScrollTween,
+          start: 'left 90%',
+          end: '+=' + letter.offsetWidth,
+          scrub: true
+        }
+      });
+    });
+  }
+}
+
+function wrapLettersInSpan(element) {
+  const text = element.textContent;
+  element.innerHTML = text
+    .split('')
+    .map(char => char === ' ' ? '<span> </span>' : '<span class="letter"><span>' + char + '</span></span>')
+    .join('');
+}
+
+// "Ce que disent nos clients" — 3D dual-deck scroll-pin effect, desktop/tablet only.
+// Two overlapping decks (portraits / quote cards) flip through in 3D as the section
+// is pinned and scrolled. On mobile this is skipped — plain stacked cards instead.
+if (window.matchMedia('(min-width: 721px)').matches) {
+  const testimonialPinHeight = document.getElementById('testimonialPinHeight');
+  const testimonialStage = document.getElementById('testimonialStage');
+  const testiMediasA = document.getElementById('testiMediasA');
+  const testiMediasB = document.getElementById('testiMediasB');
+
+  if (testimonialPinHeight && testimonialStage && testiMediasA && testiMediasB) {
+    const itemsA = testiMediasA.querySelectorAll('.testi-media');
+    const itemsB = testiMediasB.querySelectorAll('.testi-media');
+    const stepsCount = itemsA.length;
+    let currentStep = -1;
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: testimonialPinHeight,
+        start: 'top top',
+        end: 'bottom bottom',
+        pin: testimonialStage,
+        scrub: true,
+        onUpdate: self => {
+          const step = Math.round(self.progress * (stepsCount - 1));
+          if (step !== currentStep) {
+            setTestiVisible(step);
+            currentStep = step;
+          }
+        }
+      }
+    });
+
+    gsap.set(testiMediasA, { xPercent: -60 });
+    gsap.set(testiMediasB, { xPercent: 60 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: testimonialPinHeight,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true
+      }
+    });
+
+    for (let i = 0; i < stepsCount - 1; i++) {
+      const dirA = i % 2 === 0 ? 1 : -1;
+
+      tl.to(testiMediasA, { xPercent: dirA * 60, rotateY: '+=180', duration: 1, ease: 'power2.inOut' });
+      tl.to(testiMediasA, { z: -150, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.inOut' }, '<');
+      tl.to(testiMediasB, { xPercent: -dirA * 60, rotateY: '-=180', duration: 1, ease: 'power2.inOut' }, '<');
+      tl.to(testiMediasB, { z: 150, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.inOut' }, '<');
+
+      const rx = (Math.random() - 0.5) * 40;
+      const rz = (Math.random() - 0.5) * 40;
+      tl.to([testiMediasA, testiMediasB], {
+        rotateX: rx, rotateZ: rz, scale: 1.1,
+        duration: 0.5, repeat: 1, yoyo: true, ease: 'power2.in'
+      }, '<');
+    }
+
+    function setTestiVisible(index) {
+      itemsA.forEach((m, i) => m.style.visibility = i === index ? 'visible' : 'hidden');
+      itemsB.forEach((m, i) => m.style.visibility = i === index ? 'visible' : 'hidden');
+    }
+  }
 }
 
 // Gallery items appear one after another as the grid scrolls into view
@@ -256,6 +330,8 @@ if (window.matchMedia('(min-width: 721px)').matches) {
     });
   }
 }
+
+} // end initPinEffects
 
 // Gallery lightbox
 const lightbox = document.getElementById('lightbox');

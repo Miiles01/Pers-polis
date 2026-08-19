@@ -20,7 +20,6 @@
     </a>
     <nav class="main-nav" id="mainNav">
       <a href="#plats">Plats</a>
-      <a href="#book">Menu</a>
       <a href="#avis">Avis</a>
       <a href="#galerie">Galerie</a>
       <a href="#contact">Réserver</a>
@@ -43,7 +42,7 @@
       <h1>Découvrez notre<br>service de traiteur</h1>
       <p class="hero-text">Une sélection de plats persans raffinés pour vos événements.</p>
       <div class="hero-actions">
-        <a href="#book" class="btn btn-primary">Voir le menu</a>
+        <a href="#plats" class="btn btn-primary">Voir le menu</a>
         <a href="#contact" class="btn btn-outline">Nous consulter</a>
       </div>
       <p class="hero-note">Livraison en supplément · commande 7 jours à l'avance.</p>
@@ -108,62 +107,11 @@
     </div>
   </section>
 
-  <section class="book-menu" id="book">
-    <div class="flipbook-wrap reveal">
-      <button class="carousel-btn flip-prev" id="flipPrev" aria-label="Page précédente">‹</button>
-      <div class="flipbook" id="flipbook" style="--total:8">
-        <input type="checkbox" id="fp-1" class="flip-check">
-        <label for="fp-1" class="flip-page" style="--i:1">
-          <div class="flip-front"><img src="assets/book-menu/page-1.jpg" alt="Menu Persépolis, page 1" loading="lazy"><span class="cover-patch" aria-hidden="true"></span></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-2" class="flip-check">
-        <label for="fp-2" class="flip-page" style="--i:2">
-          <div class="flip-front"><img src="assets/book-menu/page-2.jpg" alt="Menu Persépolis, page 2" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-3" class="flip-check">
-        <label for="fp-3" class="flip-page" style="--i:3">
-          <div class="flip-front"><img src="assets/book-menu/page-3.jpg" alt="Menu Persépolis, page 3" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-4" class="flip-check">
-        <label for="fp-4" class="flip-page" style="--i:4">
-          <div class="flip-front"><img src="assets/book-menu/page-4.jpg" alt="Menu Persépolis, page 4" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-5" class="flip-check">
-        <label for="fp-5" class="flip-page" style="--i:5">
-          <div class="flip-front"><img src="assets/book-menu/page-5.jpg" alt="Menu Persépolis, page 5" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-6" class="flip-check">
-        <label for="fp-6" class="flip-page" style="--i:6">
-          <div class="flip-front"><img src="assets/book-menu/page-6.jpg" alt="Menu Persépolis, page 6" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-7" class="flip-check">
-        <label for="fp-7" class="flip-page" style="--i:7">
-          <div class="flip-front"><img src="assets/book-menu/page-7.jpg" alt="Menu Persépolis, page 7" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-        <input type="checkbox" id="fp-8" class="flip-check">
-        <label for="fp-8" class="flip-page" style="--i:8">
-          <div class="flip-front"><img src="assets/book-menu/page-8.jpg" alt="Menu Persépolis, page 8" loading="lazy"></div>
-          <div class="flip-back"></div>
-        </label>
-      </div>
-      <button class="carousel-btn flip-next" id="flipNext" aria-label="Page suivante">›</button>
-    </div>
-
-    <div class="menu-pager reveal">
-      <div class="pager-frame">
-        <img src="assets/book-menu/page-1.jpg" alt="Menu Persépolis" id="pagerImg">
-      </div>
-      <div class="pager-controls">
-        <button class="carousel-btn" id="pagerPrev" aria-label="Page précédente">‹</button>
-        <span class="pager-count" id="pagerCount">1 / 8</span>
-        <button class="carousel-btn" id="pagerNext" aria-label="Page suivante">›</button>
+  <section class="brand-line" id="brandLine">
+    <div class="brand-line-container">
+      <div class="brand-line-lines" id="brandLines">
+        <p class="line">L'héritage perse</p>
+        <p class="line">servi avec âme</p>
       </div>
     </div>
   </section>
@@ -190,26 +138,57 @@
       <p class="eyebrow">Ils en parlent</p>
       <h2>Ce que disent nos clients</h2>
     </div>
-    <div class="testimonial-grid">
-      <article class="testimonial-card reveal">
+    <div class="testimonial-pin-height" id="testimonialPinHeight">
+      <div class="testimonial-stage" id="testimonialStage">
+        <div class="testi-medias testi-medias-a" id="testiMediasA">
+          <div class="testi-media"><img src="assets/avatars/sophie.jpg" alt="Sophie L."></div>
+          <div class="testi-media"><img src="assets/avatars/marc-antoine.jpg" alt="Marc-Antoine T."></div>
+          <div class="testi-media"><img src="assets/avatars/camille.jpg" alt="Camille R."></div>
+        </div>
+        <div class="testi-medias testi-medias-b" id="testiMediasB">
+          <div class="testi-media">
+            <span class="testi-stars">★★★★★</span>
+            <p>« Un vrai voyage culinaire ! Le personnel est chaleureux et les saveurs très authentiques. Le koubideh était parfait. »</p>
+            <span class="testi-name">Sophie L.</span>
+          </div>
+          <div class="testi-media">
+            <span class="testi-stars">★★★★★</span>
+            <p>« Service de traiteur impeccable pour notre événement d'entreprise. Tout le monde a adoré, on réserve déjà pour l'an prochain. »</p>
+            <span class="testi-name">Marc-Antoine T.</span>
+          </div>
+          <div class="testi-media">
+            <span class="testi-stars">★★★★★</span>
+            <p>« Ambiance magnifique, plats délicieux et généreux. Parfait pour un souper en groupe entre amis. »</p>
+            <span class="testi-name">Camille R.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-mobile">
+      <article class="testimonial-card">
         <p class="testimonial-stars">★★★★★</p>
         <p class="testimonial-quote">« Un vrai voyage culinaire ! Le personnel est chaleureux et les saveurs très authentiques. Le koubideh était parfait. »</p>
-        <p class="testimonial-author">Sophie L.</p>
+        <div class="testimonial-person">
+          <img src="assets/avatars/sophie.jpg" alt="" loading="lazy">
+          <p class="testimonial-author">Sophie L.</p>
+        </div>
       </article>
-      <article class="testimonial-card reveal">
+      <article class="testimonial-card">
         <p class="testimonial-stars">★★★★★</p>
         <p class="testimonial-quote">« Service de traiteur impeccable pour notre événement d'entreprise. Tout le monde a adoré, on réserve déjà pour l'an prochain. »</p>
-        <p class="testimonial-author">Marc-Antoine T.</p>
+        <div class="testimonial-person">
+          <img src="assets/avatars/marc-antoine.jpg" alt="" loading="lazy">
+          <p class="testimonial-author">Marc-Antoine T.</p>
+        </div>
       </article>
-      <article class="testimonial-card reveal">
+      <article class="testimonial-card">
         <p class="testimonial-stars">★★★★★</p>
         <p class="testimonial-quote">« Ambiance magnifique, plats délicieux et généreux. Parfait pour un souper en groupe entre amis. »</p>
-        <p class="testimonial-author">Camille R.</p>
-      </article>
-      <article class="testimonial-card reveal">
-        <p class="testimonial-stars">★★★★★</p>
-        <p class="testimonial-quote">« Meilleure cuisine persane de Sherbrooke, sans comparaison. Le riz au safran à lui seul vaut le détour. »</p>
-        <p class="testimonial-author">Yasmine K.</p>
+        <div class="testimonial-person">
+          <img src="assets/avatars/camille.jpg" alt="" loading="lazy">
+          <p class="testimonial-author">Camille R.</p>
+        </div>
       </article>
     </div>
   </section>
@@ -289,6 +268,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
-<script src="script.js?v=3"></script>
+<script src="script.js?v=11"></script>
 </body>
 </html>
