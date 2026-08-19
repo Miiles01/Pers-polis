@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persépolis</title>
+<meta name="description" content="Service de traiteur persan à Sherbrooke. Trois formules de menu pour vos événements — mariages, cocktails d'entreprise, célébrations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-icon" aria-hidden="true"></span>
+      <span class="brand-word">Persépolis</span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#book">Menu</a>
+      <a href="#plats">Plats</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Réserver</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-media">
+      <img src="assets/hero-food.jpg" alt="Plats persans du Restaurant Persépolis" loading="eager">
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-content reveal">
+      <p class="eyebrow">Restaurant Persépolis · Sherbrooke</p>
+      <h1>Découvrez notre<br>service de traiteur</h1>
+      <p class="hero-text">Une sélection de plats persans raffinés pour vos événements.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-primary">Voir le menu</a>
+        <a href="#contact" class="btn btn-outline">Nous consulter</a>
+      </div>
+      <p class="hero-note">Livraison en supplément · commande 7 jours à l'avance.</p>
+    </div>
+  </section>
+
+  <section class="dishes" id="plats">
+    <div class="section-head reveal">
+      <p class="eyebrow">À découvrir</p>
+      <h2>Nos plats populaires</h2>
+      <p class="section-sub">Un aperçu de nos classiques les plus appréciés, préparés avec des épices persanes authentiques.</p>
+    </div>
+
+    <div class="dishes-pin" id="dishesPin">
+      <div class="dish-cards" id="dishCards">
+        <div class="dish-card">
+          <article class="dish-card-content">
+            <img src="assets/platillos/kuku-sabzi.jpg" alt="Kuku Sabzi" loading="lazy">
+            <div class="dish-info">
+              <h3>Kuku Sabzi</h3>
+              <p>Galette persane aux fines herbes et épices, servie avec yogourt maison, tomate et oignon rouge.</p>
+            </div>
+          </article>
+        </div>
+        <div class="dish-card">
+          <article class="dish-card-content">
+            <img src="assets/platillos/mezze.jpg" alt="Trempettes et mezze persans" loading="lazy">
+            <div class="dish-info">
+              <h3>Trio de mezze</h3>
+              <p>Trempettes au yogourt maison, olives marinées aux herbes, citron frais et persil.</p>
+            </div>
+          </article>
+        </div>
+        <div class="dish-card">
+          <article class="dish-card-content">
+            <img src="assets/platillos/koubideh-safrani.jpg" alt="Koubideh Safrani" loading="lazy">
+            <div class="dish-info">
+              <h3>Koubideh Safrani</h3>
+              <p>Brochette de bœuf haché mariné à l'oignon et au safran, riz basmati aux baies persanes.</p>
+            </div>
+          </article>
+        </div>
+        <div class="dish-card">
+          <article class="dish-card-content">
+            <img src="assets/platillos/vaziri.jpg" alt="Vaziri, duo de brochettes" loading="lazy">
+            <div class="dish-info">
+              <h3>Vaziri</h3>
+              <p>Duo de brochettes juteuses — poitrine de poulet et bœuf haché — servi sur riz basmati.</p>
+            </div>
+          </article>
+        </div>
+        <div class="dish-card">
+          <article class="dish-card-content">
+            <img src="assets/platillos/baghali-polo-agneau.jpg" alt="Baghali Polo à l'agneau" loading="lazy">
+            <div class="dish-info">
+              <h3>Baghali Polo à l'agneau</h3>
+              <p>Jarret d'agneau mijoté au safran, riz basmati à l'aneth et fèves vertes.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book-menu" id="book">
+    <div class="section-head reveal">
+      <p class="eyebrow">Le menu complet</p>
+      <h2>Feuilletez notre menu</h2>
+      <p class="section-sub">Consultez toutes nos pages, plat par plat.</p>
+    </div>
+
+    <div class="flipbook-wrap reveal">
+      <button class="carousel-btn flip-prev" id="flipPrev" aria-label="Page précédente">‹</button>
+      <div class="flipbook" id="flipbook" style="--total:8">
+        <input type="checkbox" id="fp-1" class="flip-check">
+        <label for="fp-1" class="flip-page" style="--i:1">
+          <div class="flip-front"><img src="assets/book-menu/page-1.jpg" alt="Menu Persépolis, page 1" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-2" class="flip-check">
+        <label for="fp-2" class="flip-page" style="--i:2">
+          <div class="flip-front"><img src="assets/book-menu/page-2.jpg" alt="Menu Persépolis, page 2" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-3" class="flip-check">
+        <label for="fp-3" class="flip-page" style="--i:3">
+          <div class="flip-front"><img src="assets/book-menu/page-3.jpg" alt="Menu Persépolis, page 3" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-4" class="flip-check">
+        <label for="fp-4" class="flip-page" style="--i:4">
+          <div class="flip-front"><img src="assets/book-menu/page-4.jpg" alt="Menu Persépolis, page 4" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-5" class="flip-check">
+        <label for="fp-5" class="flip-page" style="--i:5">
+          <div class="flip-front"><img src="assets/book-menu/page-5.jpg" alt="Menu Persépolis, page 5" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-6" class="flip-check">
+        <label for="fp-6" class="flip-page" style="--i:6">
+          <div class="flip-front"><img src="assets/book-menu/page-6.jpg" alt="Menu Persépolis, page 6" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-7" class="flip-check">
+        <label for="fp-7" class="flip-page" style="--i:7">
+          <div class="flip-front"><img src="assets/book-menu/page-7.jpg" alt="Menu Persépolis, page 7" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+        <input type="checkbox" id="fp-8" class="flip-check">
+        <label for="fp-8" class="flip-page" style="--i:8">
+          <div class="flip-front"><img src="assets/book-menu/page-8.jpg" alt="Menu Persépolis, page 8" loading="lazy"></div>
+          <div class="flip-back"></div>
+        </label>
+      </div>
+      <button class="carousel-btn flip-next" id="flipNext" aria-label="Page suivante">›</button>
+    </div>
+
+    <div class="menu-pager reveal">
+      <div class="pager-frame">
+        <img src="assets/book-menu/page-1.jpg" alt="Menu Persépolis" id="pagerImg">
+      </div>
+      <div class="pager-controls">
+        <button class="carousel-btn" id="pagerPrev" aria-label="Page précédente">‹</button>
+        <span class="pager-count" id="pagerCount">1 / 8</span>
+        <button class="carousel-btn" id="pagerNext" aria-label="Page suivante">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="infos" id="infos">
+    <div class="infos-grid">
+      <div class="info-card">
+        <h3>Délai de commande</h3>
+        <p>Toute commande de traiteur doit être passée au moins 7 jours à l'avance pour garantir la disponibilité des ingrédients et la fraîcheur des plats.</p>
+      </div>
+      <div class="info-card">
+        <h3>Livraison</h3>
+        <p>Des frais de livraison s'appliquent en supplément selon la distance et la taille de l'événement. Demandez une estimation lors de votre appel.</p>
+      </div>
+      <div class="info-card">
+        <h3>Sur mesure</h3>
+        <p>Allergies, préférences ou une occasion particulière ? Notre équipe personnalise chaque formule selon vos besoins.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="avis">
+    <div class="section-head reveal">
+      <p class="eyebrow">Ils en parlent</p>
+      <h2>Ce que disent nos clients</h2>
+    </div>
+    <div class="testimonial-grid">
+      <article class="testimonial-card reveal">
+        <p class="testimonial-stars">★★★★★</p>
+        <p class="testimonial-quote">« Un vrai voyage culinaire ! Le personnel est chaleureux et les saveurs très authentiques. Le koubideh était parfait. »</p>
+        <p class="testimonial-author">Sophie L.</p>
+      </article>
+      <article class="testimonial-card reveal">
+        <p class="testimonial-stars">★★★★★</p>
+        <p class="testimonial-quote">« Service de traiteur impeccable pour notre événement d'entreprise. Tout le monde a adoré, on réserve déjà pour l'an prochain. »</p>
+        <p class="testimonial-author">Marc-Antoine T.</p>
+      </article>
+      <article class="testimonial-card reveal">
+        <p class="testimonial-stars">★★★★★</p>
+        <p class="testimonial-quote">« Ambiance magnifique, plats délicieux et généreux. Parfait pour un souper en groupe entre amis. »</p>
+        <p class="testimonial-author">Camille R.</p>
+      </article>
+      <article class="testimonial-card reveal">
+        <p class="testimonial-stars">★★★★★</p>
+        <p class="testimonial-quote">« Meilleure cuisine persane de Sherbrooke, sans comparaison. Le riz au safran à lui seul vaut le détour. »</p>
+        <p class="testimonial-author">Yasmine K.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="gallery" id="galerie">
+    <div class="section-head reveal">
+      <p class="eyebrow">Chez nous</p>
+      <h2>Galerie</h2>
+      <p class="section-sub">Un aperçu de notre salle et de nos assiettes.</p>
+    </div>
+    <div class="gallery-grid">
+      <button class="gallery-item" data-full="assets/galerie/facade-nuit.jpg">
+        <img src="assets/galerie/facade-nuit.jpg" alt="Façade du restaurant Persépolis de nuit" loading="lazy">
+      </button>
+      <button class="gallery-item" data-full="assets/galerie/salle-iran.jpg">
+        <img src="assets/galerie/salle-iran.jpg" alt="Salle à manger du restaurant" loading="lazy">
+      </button>
+      <button class="gallery-item" data-full="assets/galerie/assiette-brochettes.jpg">
+        <img src="assets/galerie/assiette-brochettes.jpg" alt="Assiette de brochettes persanes" loading="lazy">
+      </button>
+      <button class="gallery-item" data-full="assets/galerie/fresque-persepolis.jpg">
+        <img src="assets/galerie/fresque-persepolis.jpg" alt="Fresque murale inspirée de Persépolis" loading="lazy">
+      </button>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">&times;</button>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+
+  <section class="cta-band reveal" id="contact">
+    <div class="cta-inner">
+      <h2>Prêt à réserver votre traiteur ?</h2>
+      <p>Parlez-nous de votre événement — nous nous occupons du reste.</p>
+      <div class="hero-actions">
+        <a href="tel:+18193463333" class="btn btn-primary">Appeler (819) 346-3333</a>
+        <a href="https://restaurantpersepolis.ca/contact/" target="_blank" rel="noopener" class="btn btn-outline">Formulaire de contact</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand-hero">
+    <span class="brand-icon brand-icon-xl" aria-hidden="true"></span>
+    <span class="brand-word brand-word-xl">Persépolis</span>
+    <p class="footer-tagline">Cuisine persane à Sherbrooke</p>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Adresse</h4>
+      <p>305 King Ouest<br>Sherbrooke, QC J1H 1R2</p>
+    </div>
+    <div class="footer-col">
+      <h4>Heures</h4>
+      <p>Dimanche–Lundi : Fermé<br>
+      Mardi–Jeudi : 17h00–21h00<br>
+      Vendredi–Samedi : 17h00–22h00</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p><a href="tel:+18193463333">(819) 346-3333</a></p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/sherbrooke.ca/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/restaurant.persepolis/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Restaurant Persépolis — Menu traiteur, page non officielle en développement.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="script.js?v=3"></script>
+</body>
+</html>
