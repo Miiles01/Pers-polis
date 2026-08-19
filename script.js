@@ -65,7 +65,7 @@ if (heroTitle) {
   });
 }
 
-const scrollTitles = document.querySelectorAll('.section-head h2, .cta-band h2');
+const scrollTitles = document.querySelectorAll('.section-head h2, .cta-band h2, .dish-info h3');
 const titleWordsByEl = new Map();
 scrollTitles.forEach(el => {
   const words = splitWords(el).words;
@@ -151,6 +151,27 @@ pagerNext?.addEventListener('click', () => {
   pagerIndex = (pagerIndex + 1) % bookPages.length;
   renderPager();
 });
+
+// Testimonial quotes — line-by-line stagger as the section scrolls into view
+const testimonialQuotes = document.querySelectorAll('.testimonial-quote');
+if (testimonialQuotes.length) {
+  gsap.set(testimonialQuotes, { opacity: 0, y: 30 });
+
+  const testimonialObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        gsap.to(testimonialQuotes, {
+          y: 0, opacity: 1,
+          stagger: 0.2, duration: 0.8,
+          ease: 'power2.out'
+        });
+        testimonialObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  testimonialObserver.observe(document.querySelector('.testimonial-grid'));
+}
 
 // Gallery items appear one after another as the grid scrolls into view
 const galleryItems = document.querySelectorAll('.gallery-item');

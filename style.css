@@ -291,6 +291,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .dish-card-content {
   width: 100%;
+  height: 100%;
   will-change: transform;
   white-space: normal;
   background: var(--card);
@@ -370,6 +371,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   object-fit: cover;
   display: block;
+}
+.cover-patch {
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  top: 82.5%;
+  bottom: 7%;
+  background: #0c0a08;
 }
 .flip-check:checked + .flip-page {
   transform: rotateY(-170deg);
@@ -500,8 +509,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: .9rem;
   padding-bottom: 4rem;
 }
-.brand-icon-xl { width: 96px; height: 96px; }
-.brand-word-xl { font-size: 2.6rem; }
+.brand-icon-xl { width: 140px; height: 140px; }
+.brand-word-xl { font-size: 3.4rem; }
 .footer-tagline { color: var(--muted); font-size: .95rem; margin: 0; }
 
 .footer-inner {
@@ -545,7 +554,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .menu-card-featured { transform: none; }
   .infos-grid { grid-template-columns: 1fr; gap: 3rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
-  .brand-icon-xl { width: 76px; height: 76px; }
+  .brand-icon-xl { width: 100px; height: 100px; }
   .testimonial-grid { grid-template-columns: 1fr 1fr; }
   .brand-word-xl { font-size: 2.1rem; }
 }
