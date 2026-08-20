@@ -334,3 +334,24 @@ lightbox?.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
+
+// --- Promo Video Logic ---
+const promoVideo = document.getElementById('promoVideo');
+const playBtn = document.getElementById('playBtn');
+
+if (promoVideo && playBtn) {
+  playBtn.addEventListener('click', () => {
+    if (promoVideo.paused) {
+      promoVideo.play();
+      playBtn.style.opacity = '0';
+      playBtn.style.pointerEvents = 'none';
+      promoVideo.setAttribute('controls', 'true');
+    }
+  });
+
+  promoVideo.addEventListener('pause', () => {
+    playBtn.style.opacity = '1';
+    playBtn.style.pointerEvents = 'auto';
+    promoVideo.removeAttribute('controls');
+  });
+}
