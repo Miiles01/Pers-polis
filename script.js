@@ -335,23 +335,19 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-// --- Promo Video Logic ---
+// Promo video — paused by default, play button starts it
 const promoVideo = document.getElementById('promoVideo');
-const playBtn = document.getElementById('playBtn');
+const promoVideoPlay = document.getElementById('promoVideoPlay');
 
-if (promoVideo && playBtn) {
-  playBtn.addEventListener('click', () => {
-    if (promoVideo.paused) {
-      promoVideo.play();
-      playBtn.style.opacity = '0';
-      playBtn.style.pointerEvents = 'none';
-      promoVideo.setAttribute('controls', 'true');
-    }
+if (promoVideo && promoVideoPlay) {
+  const promoWrap = promoVideo.closest('.promo-video');
+  promoVideoPlay.addEventListener('click', () => {
+    promoVideo.play();
+    promoWrap.classList.add('is-playing');
   });
-
-  promoVideo.addEventListener('pause', () => {
-    playBtn.style.opacity = '1';
-    playBtn.style.pointerEvents = 'auto';
-    promoVideo.removeAttribute('controls');
+  promoVideo.addEventListener('pause', () => promoWrap.classList.remove('is-playing'));
+  promoVideo.addEventListener('ended', () => promoWrap.classList.remove('is-playing'));
+  promoVideo.addEventListener('click', () => {
+    if (!promoVideo.paused) promoVideo.pause();
   });
 }
